@@ -17,9 +17,12 @@ route("/echo/:message") do
     @params(:message)
 end
 
-route("/sms") do
-    resp_sms()
-    from = Genie.Requests.payload(:From)
+route("/sms", method=POST) do
     body = Genie.Requests.payload(:Body)
-    print("from: $from message: $body")
+    from = Genie.Requests.payload(:From)
+
+    client.messages.create(
+        body = "Text received! from: $from message: $body",
+        from_ = trial_number,
+        to = "+15038106415")
 end

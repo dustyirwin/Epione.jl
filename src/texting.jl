@@ -14,11 +14,10 @@ resp_sms() = client.messages.create(
     from_ = trial_number,
     to = "+15038106415")
 
-test_mms = client.messages.create(
+test_mms() = client.messages.create(
     body = "This is a test MMS!",
     from_ = trial_number,
     media_url=["https://images-na.ssl-images-amazon.com/images/I/410rHVNt%2BzL._AC_UL160_.jpg"],
     to = "+15038106415")
 
-
-print(msg.sid)
+#print(msg.sid)

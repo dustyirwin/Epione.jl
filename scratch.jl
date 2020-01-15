@@ -6,6 +6,8 @@ using PyCall
 include("./app/resources/patients/Patients.jl")
 include("./app/resources/patients/PatientsController.jl")
 include("./routes.jl")
+include("./src/secrets.jl")
+include("./src/texting.jl")
 
 haskey(ENV, "HOST") || (ENV["HOST"] = "0.0.0.0")
 haskey(ENV, "GENIE_ENV") || (ENV["GENIE_ENV"] = "dev")
@@ -13,6 +15,10 @@ haskey(ENV, "GENIE_ENV") || (ENV["GENIE_ENV"] = "dev")
 SearchLight.Configuration.load_db_connection() |> SearchLight.Database.connect!
 
 startup()
+
+
+#########################################################################
+
 
 SearchLight.Migration.status()
 #SearchLight.Generator.new_migration("patients")
