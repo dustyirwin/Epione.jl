@@ -18,7 +18,8 @@ route("/echo/:message") do
 end
 
 route("/sms") do
-    resp = MessagingResponse()
-    resp.message("Thanks for your response!")
-
-    return str(resp) end
+    resp_sms()
+    from = Genie.Requests.payload(:From)
+    body = Genie.Requests.payload(:Body)
+    print("from: $from message: $body")
+end

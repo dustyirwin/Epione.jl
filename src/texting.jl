@@ -4,8 +4,13 @@ rest = pyimport("twilio.rest")
 
 client = rest.Client(session_id, auth_token)
 
-test_sms = client.messages.create(
+test_sms() = client.messages.create(
     body = "This is a test SMS!",
+    from_ = trial_number,
+    to = "+15038106415")
+
+resp_sms() = client.messages.create(
+    body = "This is an automatic response SMS!",
     from_ = trial_number,
     to = "+15038106415")
 

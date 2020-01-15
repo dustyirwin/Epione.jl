@@ -34,6 +34,7 @@ module Patients
     email = "",
     MRN = 0,
   ) = Patient("patients", "id", ### INTERNALS
+        id,
         first_name,
         last_name,
         DOB,

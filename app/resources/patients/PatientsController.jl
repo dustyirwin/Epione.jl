@@ -14,10 +14,7 @@ module PatientsController
     MRN::Int
   end
 
-  const TestPatients = Patient[
-    Patient("John", "Doe", 12345689, "Male", 5555555555, 5555555555, "john@doe.com", 0000000),
-    Patient("Jane", "Doe", 12345689, "Female", 5555555555, 5555555555, "jane@doe.com", 0000000),
-  ]
+
 
   function patient_list()
     pats = [p for p in all(Patients.Patient)]
