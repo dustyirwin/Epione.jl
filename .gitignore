@@ -37,7 +37,6 @@ Thumbs.db
 .vscode
 .tags*
 .tags
-scratch.jl
 
 # NPM packages folder.
 node_modules/

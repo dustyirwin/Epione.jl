@@ -1,4 +1,6 @@
-using Revise, Logging
+using Revise
+using Logging
+using Genie
 
 haskey(ENV, "HOST") || (ENV["HOST"] = "0.0.0.0")
 haskey(ENV, "GENIE_ENV") || (ENV["GENIE_ENV"] = "dev")
