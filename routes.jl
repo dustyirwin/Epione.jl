@@ -18,7 +18,7 @@ route("/echo/:message") do
 end
 
 route("/sms", method=POST) do
-    body = Genie.Requests.payload(:Body)
+    body = replace(Genie.Requests.payload(:Body), "+"=>" ")
     from = Genie.Requests.payload(:From)
 
     client.messages.create(
