@@ -17,12 +17,19 @@ route("/echo/:message") do
     @params(:message)
 end
 
+
 route("/sms", method=POST) do
     body = replace(Genie.Requests.payload(:Body), "+"=>" ")
+    score = join(extract_score(body))
     from = Genie.Requests.payload(:From)
+    first_name = ""
+
+    for i in all(Patients.Patient)
+        if i.phone1 == from || i.phone2 == from
+            first_name = i.first_name end end
 
     client.messages.create(
-        body = "Text received! from: $from message: $body",
+        body = "Thanks $first_name! You reported a score of $score.",
         from_ = trial_number,
         to = "+15038106415")
 end

@@ -20,4 +20,16 @@ test_mms() = client.messages.create(
     media_url=["https://images-na.ssl-images-amazon.com/images/I/410rHVNt%2BzL._AC_UL160_.jpg"],
     to = "+15038106415")
 
+3 in 0:10
+
+body = "I feel like a 9 today!"
+parse(Int, "9")
+
+function extract_score(body, scores=[])
+    for char in body
+        try char = parse(Int, char)
+            append!(scores, char) catch end end
+    return scores
+end
+
 #print(msg.sid)
