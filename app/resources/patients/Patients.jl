@@ -43,5 +43,4 @@ module Patients
         phone2,
         email,
         MRN) ### FIELDS
-
 end

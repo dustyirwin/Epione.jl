@@ -14,8 +14,6 @@ module PatientsController
     MRN::Int
   end
 
-
-
   function patient_list()
     pats = [p for p in all(Patients.Patient)]
     "<h1>Patient Info:</h1>

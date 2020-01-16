@@ -22,14 +22,10 @@ route("/sms", method=POST) do
     body = replace(Genie.Requests.payload(:Body), "+"=>" ")
     score = join(extract_score(body))
     from = Genie.Requests.payload(:From)
-    first_name = ""
-
-    for i in all(Patients.Patient)
-        if i.phone1 == from || i.phone2 == from
-            first_name = i.first_name end end
+    first_name = get_first_name_from_phone_number(from)
 
     client.messages.create(
-        body = "Thanks $first_name! You reported a score of $score.",
+        body = "Thanks $(first_name)! You reported a score of $score.",
         from_ = trial_number,
         to = "+15038106415")
 end
