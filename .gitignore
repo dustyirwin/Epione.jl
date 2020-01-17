@@ -42,5 +42,6 @@ Thumbs.db
 node_modules/
 
 
-# DB
+# Custom
 *.sqlite
+scratch.jl

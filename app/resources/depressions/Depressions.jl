@@ -1,7 +1,7 @@
 module Depressions
 
   using SearchLight
-  using Dates
+  using Dates: now
 
   export Depression
 

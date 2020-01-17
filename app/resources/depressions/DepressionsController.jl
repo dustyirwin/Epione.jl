@@ -1,19 +1,21 @@
 module DepressionsController
 
-    using Main.Depressions
-    using Plots
+  using Main.Depressions
 
-    struct Sleep
-        MRN::Int
-        date::String
-        score::Float64
-    end
+  """
+  struct Sleep
+    MRN::Int
+    date::String
+    score::Float64
+  end
+  """
 
-    function plot_sleep_hours_by_MRN(MRN, scores=[], dates=[])
-        for s in all(Depressions.Depression)
-            if MRN == s.MRN
-                append!(dates, s.date)
-                append!(scores, s.score) end end
-        @show plot(dates, scores)
-    end
+  function get_depression_data_by_MRN(MRN::Int, scores=Float64[], dates=String[])
+    for s in all(Depressions.Depression)
+      if MRN == s.MRN
+        append!(dates, [s.date])
+        append!(scores, [s.score]) end end
+    return dates, scores
+  end
+
 end

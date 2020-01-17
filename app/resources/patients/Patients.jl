@@ -34,13 +34,13 @@ module Patients
     email = "",
     MRN = 0,
   ) = Patient("patients", "id", ### INTERNALS
-        id,
-        first_name,
-        last_name,
-        DOB,
-        sex,
-        phone1,
-        phone2,
-        email,
-        MRN) ### FIELDS
+    id,
+    first_name,
+    last_name,
+    DOB,
+    sex,
+    phone1,
+    phone2,
+    email,
+    MRN) ### FIELDS
 end

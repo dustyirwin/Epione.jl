@@ -1,7 +1,7 @@
 module Sleeps
 
   using SearchLight
-  using Dates
+  using Dates: now
 
   export Sleep
 
