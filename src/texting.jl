@@ -22,11 +22,11 @@ function extract_score(body, scores=[])
     return scores
 end
 
-function get_first_name_from_phone_number(phone_num)
+function get_patient_data_by_phone_number(phone_num)
     phone_num = parse(Int, phone_num[3:end])
     for p in all(Patients.Patient)
         if p.phone1 == phone_num || p.phone2 == phone_num
-            return p.first_name
+            return p
     end end end
 
 

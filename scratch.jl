@@ -31,8 +31,8 @@ SearchLight.Migration.status()
 Patients.Patient(first_name="Oprah", last_name="Winfrey", MRN = 5) |> save!
 
 timestamp = ceil(now(), Second(1))
-Sleeps.Sleep(MRN=2, date=string(timestamp), hours=7.5) |> save!
-Depressions.Depression(MRN=2, date=string(timestamp), score=4.0) |> save!
+Sleeps.Sleep(MRN=3, date=string(timestamp), hours=6.5) |> save!
+Depressions.Depression(MRN=3, date=string(timestamp), score=3.5) |> save!
 
 all(Patients.Patient)
 all(Sleeps.Sleep)
@@ -42,12 +42,4 @@ dep_data = DepressionsController.get_depression_data_by_MRN(2)
 slp_data = SleepsController.get_sleep_data_by_MRN(2)
 
 q = PatientsController.get_patient_plot_by_MRN(2)
-savefig(q, "./app/plots/1234.png")
-p = get_patient_data_by_MRN(2)
-p.first_name
-
-d = string(now())[1:10]
-
-MRN = 2
-p = PatientsController.get_patient_plot_by_MRN(MRN)
-savefig(p, "./app/plots/$(MRN).png")
+savefig(q, "./public/plots/1.png")

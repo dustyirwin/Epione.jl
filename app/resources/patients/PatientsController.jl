@@ -30,8 +30,8 @@ module PatientsController
   end
 
   function get_patient_plot_by_MRN(MRN::Int, first_name="", last_name="")
-    slp_data = SleepsController.get_sleep_data_by_MRN(2)
-    dep_data = DepressionsController.get_depression_data_by_MRN(2)
+    slp_data = SleepsController.get_sleep_data_by_MRN(MRN)
+    dep_data = DepressionsController.get_depression_data_by_MRN(MRN)
 
     plt = plot(slp_data[1], slp_data[2], label="Hours Slept", w=3)
     plt = plot!(dep_data[1], dep_data[2], label="Depression Score", w=3)
@@ -40,8 +40,8 @@ module PatientsController
       if p.MRN == MRN
         first_name = p.first_name
         last_name = p.last_name
-        break
-    end end
+        break end
+    end
 
     title!(plt, "Patient Records For $first_name $last_name")
     yaxis!(plt, "Self-Reported Values")

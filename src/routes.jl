@@ -12,19 +12,26 @@ route("/sum/:x::Int/:y::Int") do
 end
 
 route("/patient_plots/:MRN") do
+  plt = PatientsController.get_patient_plot_by_MRN(parse(Int, @params(:MRN)))
+  savefig(plt, "./public/plots/$(@params(:MRN)).png")
   serve_static_file("/plots/$(@params(:MRN)).png")
-  #"""<img src="/plots/$(@params(:MRN)).png" alt="Error!">"""
 end
 
-
 route("/sms", method=POST) do
+  from = Genie.Requests.payload(:From)
+  p = get_patient_data_by_phone_number(from)
+
   body = replace(Genie.Requests.payload(:Body), "+"=>" ")
   score = join(extract_score(body))
-  from = Genie.Requests.payload(:From)
-  first_name = get_first_name_from_phone_number(from)
 
   client.messages.create(
-    body = "Thanks $(first_name)! You reported a score of $score.",
+    body = "Thanks $(p.first_name)! You reported a value of $score.",
     from_ = trial_number,
     to = "+15038106415")
+
+  client.messages.create(
+      body = "$(p.first_name) $(p.last_name) has updated their mood chart!",
+      from_ = trial_number,
+      media_url=["http://c6d5b0cb.ngrok.io/patient_plots/$(p.MRN)"],
+      to = "+15038106415")
 end
