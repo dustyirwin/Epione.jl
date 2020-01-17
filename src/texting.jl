@@ -11,8 +11,9 @@ test_sms() = client.messages.create(
 test_mms() = client.messages.create(
     body = "This is a test MMS!",
     from_ = trial_number,
-    media_url=["https://images-na.ssl-images-amazon.com/images/I/410rHVNt%2BzL._AC_UL160_.jpg"],
+    media_url=["http://c6d5b0cb.ngrok.io/patient_plots/2"],
     to = "+15038106415")
+test_mms()
 
 function extract_score(body, scores=[])
     for char in body

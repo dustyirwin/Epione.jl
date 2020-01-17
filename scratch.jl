@@ -2,13 +2,17 @@ using Pkg; Pkg.activate(".")
 using Genie
 using SearchLight
 using PyCall
+using Dates: now, Second
+using Plots
 
 #include("genie.jl") BROKEN??
 
-include("./app/resources/patients/Patients.jl")
-include("./app/resources/patients/PatientsController.jl")
 include("./app/resources/sleeps/Sleeps.jl")
 include("./app/resources/sleeps/SleepsController.jl")
+include("./app/resources/depressions/Depressions.jl")
+include("./app/resources/depressions/DepressionsController.jl")
+include("./app/resources/patients/Patients.jl")
+include("./app/resources/patients/PatientsController.jl")
 include("./config/secrets.jl")
 include("./src/routes.jl")
 include("./src/texting.jl")
@@ -20,31 +24,30 @@ SearchLight.Configuration.load_db_connection() |> SearchLight.Database.connect!
 
 startup()
 
-
 ################################################################################
 
-
 SearchLight.Migration.status()
-#SearchLight.Generator.new_migration("patients")
-#SearchLight.Generator.newresource("Patient")
-#SearchLight.Migration.last_up()
 
-new_pat = Patients.Patient(first_name="Jane", last_name="Doe", MRN = 0000001)
-new_sleep = Sleeps.Sleep(MRN=2, date=string(now()), hours=7.5)
-save!(new_sleep)
+Patients.Patient(first_name="Oprah", last_name="Winfrey", MRN = 5) |> save!
 
+timestamp = ceil(now(), Second(1))
+Sleeps.Sleep(MRN=2, date=string(timestamp), hours=7.5) |> save!
+Depressions.Depression(MRN=2, date=string(timestamp), score=4.0) |> save!
+
+all(Patients.Patient)
 all(Sleeps.Sleep)
+all(Depressions.Depression)
 
+dep_data = DepressionsController.get_depression_data_by_MRN(2)
+slp_data = SleepsController.get_sleep_data_by_MRN(2)
 
-
-sleep_plot = plot(, rand(length(dates)))
-title!(sleep_plot, "Patient Sleep Record For $first_name $last_name")
-yaxis!(sleep_plot, "Reported Hours Slept")
-
-
-SleepsController.plot_sleep_hours_by_MRN(2)
+q = PatientsController.get_patient_plot_by_MRN(2)
+savefig(q, "./app/plots/1234.png")
 p = get_patient_data_by_MRN(2)
 p.first_name
 
+d = string(now())[1:10]
 
-string(now())
+MRN = 2
+p = PatientsController.get_patient_plot_by_MRN(MRN)
+savefig(p, "./app/plots/$(MRN).png")
