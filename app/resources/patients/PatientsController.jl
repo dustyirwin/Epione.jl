@@ -1,26 +1,17 @@
 module PatientsController
 
+  using Main.Patients: Patient
+  using Main.Sleeps: Sleep
+  using Main.Depressions: Depression
+
   using Genie.Renderer
-  using Main.Patients
-  using Main.SleepsController
-  using Main.DepressionsController
+  using SearchLight
   using Plots
 
-  """
-  struct Patient
-    first_name::String
-    last_name::String
-    DOB::Int
-    sex::String
-    phone1::Int
-    phone2::Int
-    email::String
-    MRN::Int
-  end
-  """
+  export get_patient_plot_by_MRN
 
   function patient_list()
-    pats = [p for p in all(Patients.Patient)]
+    pats = [p for p in all(Patient)]
     "<h1>Patient Info:</h1>
     <ul>$(["<li>$(p.first_name) $(p.last_name) $(p.phone1)</li>" for p in pats]...)</ul>"
   end
@@ -30,23 +21,17 @@ module PatientsController
   end
 
   function get_patient_plot_by_MRN(MRN::Int, first_name="", last_name="")
-    slp_data = SleepsController.get_sleep_data_by_MRN(MRN)
-    dep_data = DepressionsController.get_depression_data_by_MRN(MRN)
+    patient = findone(Patient, MRN=MRN)
+    sleeps = [(s.date, s.hours) for s in find(Sleep, MRN=MRN)]
+    depressions = [(d.date, d.score) for d in find(Depression, MRN=MRN)]
 
-    plt = plot(slp_data[1], slp_data[2], label="Hours Slept", w=3)
-    plt = plot!(dep_data[1], dep_data[2], label="Depression Score", w=3)
+    plot = Plots.plot(sleeps, label="Hours Slept", w=3)
+    plot = Plots.plot!(depressions, label="Depression Score", w=3)
 
-    for p in all(Patients.Patient)
-      if p.MRN == MRN
-        first_name = p.first_name
-        last_name = p.last_name
-        break end
-    end
+    title!(plot, "Patient Records For $(patient.first_name) $(patient.last_name)")
+    yaxis!(plot, "Self-Reported Values")
 
-    title!(plt, "Patient Records For $first_name $last_name")
-    yaxis!(plt, "Self-Reported Values")
-
-    return plt
+    return plot
   end
 
 end

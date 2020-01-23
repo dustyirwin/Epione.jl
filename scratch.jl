@@ -3,25 +3,53 @@
 
 SearchLight.Migration.status()
 
-Patients.Patient(first_name="Oprah", last_name="Winfrey", MRN = 5) |> save!
+Patients.Patient(first_name="Oprah", last_name="Winfrey", MRN=5) |> save!
 
 timestamp = ceil(now(), Second(1))
-Sleeps.Sleep(MRN=3, date=string(timestamp), hours=8.5) |> save!
-Depressions.Depression(MRN=3, date=string(timestamp), score=5.5) |> save!
+MRN = 1
+Sleeps.Sleep(MRN=MRN, date=string(timestamp), hours=6.5) |> save!
+Depressions.Depression(MRN=MRN, date=string(timestamp), score=3.5) |> save!
 
-all(Patients.Patient)
-
-
-pat_2 = SearchLight.findone(Patients.Patient, MRN=2)
-sleeps_for_2 = [s for s in all(Sleeps.Sleep) if s.MRN==2]
+test_sms()
 
 
-all(Depressions.Depression)
 
-dep_data = DepressionsController.get_depression_data_by_MRN(2)
-slp_data = SleepsController.get_sleep_data_by_MRN(2)
 
-q = PatientsController.get_patient_plot_by_MRN(3)
+function read_text(p::Patients.Patient, text_body::String)
+  score = try parse(Int, join(extract_score(body))) catch; false end
+
+  if occursin("epi_help", lowercase(text_body))
+    client.messages.create(
+      body = msgs(p=p)["help"],
+      from_ = trial_number,
+      to = "+15038106415")
+
+  elseif score !== false
+    client.messages.create(
+      body = "Thanks $(p.first_name)! You reported a value of $score.",
+      from_ = trial_number,
+      to = "+15038106415")
+    client.messages.create(
+      body = "$(p.first_name) $(p.last_name) has updated their mood chart!",
+      from_ = trial_number,
+      media_url=["$ngrok_address/patient_plots/$(p.MRN)"],
+      to = "+15038106415")
+end end
+
+pat = findone(Patients.Patient, MRN=2)
+
+read_text(pat, "help")
+
+score = parse(Int, join(extract_score("i feel like a 10!")))
+
+MRN=2
+
+sleeps = [(s.date, s.hours) for s in find(Sleeps.Sleep, MRN=MRN)]
+plot(sleeps)
+
+ngrok_address
+
+q = PatientsController.get_patient_plot_by_MRN(MRN)
 savefig(q, "./public/plots/1.png")
 
 pats = 20

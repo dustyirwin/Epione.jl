@@ -4,13 +4,12 @@ using SearchLight
 using PyCall
 using Dates: now, Second
 using Plots
+using OnlineStats
 
 #include("genie.jl") BROKEN??
 
 include("./app/resources/sleeps/Sleeps.jl")
-include("./app/resources/sleeps/SleepsController.jl")
 include("./app/resources/depressions/Depressions.jl")
-include("./app/resources/depressions/DepressionsController.jl")
 include("./app/resources/patients/Patients.jl")
 include("./app/resources/patients/PatientsController.jl")
 include("./config/secrets.jl")

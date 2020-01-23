@@ -4,14 +4,14 @@ rest = pyimport("twilio.rest")
 client = rest.Client(session_id, auth_token)
 
 test_sms() = client.messages.create(
-  body = "This is a test SMS!",
+  body = msgs()["help"],
   from_ = trial_number,
   to = "+15038106415")
 
-test_mms() = client.messages.create(
+test_mms(MRN::Int) = client.messages.create(
   body = "This is a test MMS!",
   from_ = trial_number,
-  media_url=["http://c6d5b0cb.ngrok.io/patient_plots/2"],
+  media_url=["$ngrok_address/patient_plots/$MRN"],
   to = "+15038106415")
 
 
@@ -22,18 +22,12 @@ function extract_score(body, scores=[])
   return scores
 end
 
-function get_patient_data_by_phone_number(phone_num)
-  phone_num = parse(Int, phone_num[3:end])
-  for p in all(Patients.Patient)
-    if p.phone1 == phone_num || p.phone2 == phone_num
-      return p
-  end end end
 
-function start_texting_service()
+function start_texting_service(ngrok_address::String)
   while true
     for p in all(Patients.Patient)
       if awaiting_sms_routine(p) == true
-        @async dispatch_sms_routine(p) end end
+        @async dispatch_sms_routine(p, ngrok_address) end end
     sleep(600)
 end end
 
