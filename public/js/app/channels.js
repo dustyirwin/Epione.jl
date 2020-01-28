@@ -3,7 +3,7 @@ window.WebChannels.load_channels = function() {
   const SERVER_HOST = 'localhost';
   const SERVER_PORT = 8001;
 
-  var socket = new WebSocket('ws://' + SERVER_HOST + ':' + SERVER_PORT);
+  var socket = new websockets('ws://' + SERVER_HOST + ':' + SERVER_PORT);
   var channels = window.WebChannels;
 
   channels.channel = socket;
@@ -92,7 +92,7 @@ WebChannels.errorHandlers.push(function(event) {
 });
 
 WebChannels.closeHandlers.push(function(event) {
-  console.log("Server closed WebSocket connection");
+  console.log("Server closed websockets connection");
 });
 
 function parse_payload(json_data) {

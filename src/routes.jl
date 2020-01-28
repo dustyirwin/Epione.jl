@@ -1,11 +1,11 @@
-using Genie.Router
 using Main.PatientsController
+using Genie.Router
 
 route("/") do
   serve_static_file("welcome.html")
 end
 
-route("/patients", PatientsController.patient_list)
+route("/patients", PatientsController.patient_list_html)
 
 route("/sum/:x::Int/:y::Int") do
   @params(:x) + @params(:y)

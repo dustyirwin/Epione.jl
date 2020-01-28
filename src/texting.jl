@@ -1,7 +1,13 @@
-ENV["PYTHON"] = "C:\\Users\\dustin.irwin\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
+module Texting
+
+using Main.Secrets
+using Main.Patients
+using PyCall
+
+
 
 rest = pyimport("twilio.rest")
-client = rest.Client(session_id, auth_token)
+client = rest.Client(Secrets.session_id, Secrets.auth_token)
 
 test_sms() = client.messages.create(
   body = msgs()["help"],
@@ -38,6 +44,6 @@ end
 function dispatch_sms_routine(p::Patients.Patient)
 
 end
-
-
 #print(msg.sid)
+
+end

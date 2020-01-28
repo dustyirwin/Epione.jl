@@ -1,6 +1,9 @@
 <h1>Patients: </h1>
+
 <ul>
    <% @foreach(patients) do p %>
-     <li>$(p.first_name) $(p.last_name) $(p.phone1)</li>
+     <li>
+       $(p.first_name) $(p.last_name) $(p.phone1) <a href="/patient_plots/$(p.MRN)">See Chart</a> 
+     </li>
    <% end %>
 </ul>
