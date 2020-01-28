@@ -59,7 +59,7 @@ plot(sleeps)
 
 ngrok_address
 PatientsController.patient_list()
-q = PatientsController.get_patient_plot_by_MRN(MRN)
+q = PatientsController.get_patient_plot_by_MRN(2)
 savefig(q, "./public/plots/1.png")
 
 pats = 20

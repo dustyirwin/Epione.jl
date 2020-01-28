@@ -1,5 +1,7 @@
 using Main.PatientsController
 using Genie.Router
+using Plots
+
 
 route("/") do
   serve_static_file("welcome.html")

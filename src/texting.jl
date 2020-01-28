@@ -5,7 +5,6 @@ using Main.Patients
 using PyCall
 
 
-
 rest = pyimport("twilio.rest")
 client = rest.Client(Secrets.session_id, Secrets.auth_token)
 
@@ -28,7 +27,6 @@ function extract_score(body, scores=[])
   return scores
 end
 
-
 function start_texting_service(ngrok_address::String)
   while true
     for p in all(Patients.Patient)
@@ -38,12 +36,10 @@ function start_texting_service(ngrok_address::String)
 end end
 
 function awaiting_sms_routine(p::Patients.Patient)
-
 end
 
 function dispatch_sms_routine(p::Patients.Patient)
-
 end
-#print(msg.sid)
+
 
 end

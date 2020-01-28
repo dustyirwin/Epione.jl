@@ -7,6 +7,7 @@ using Main.Depressions: Depression
 using Genie.Renderer
 using Genie.Renderer.Html
 using SearchLight
+using OnlineStats
 using Plots
 
 export get_patient_plot_by_MRN
@@ -29,7 +30,7 @@ function get_patient_plot_by_MRN(MRN::Int, first_name="", last_name="")
   plot = Plots.plot(sleeps, label="Hours Slept", w=3)
   plot = Plots.plot!(depressions, label="Depression Score", w=3)
 
-  title!(plot, "Patient Records For $(patient.first_name) $(patient.last_name)")
+  title!(plot, "Patient Records For $(patient.first_name) $(patient.last_name)  MRN:$(patient.MRN)")
   yaxis!(plot, "Self-Reported Values")
 
   return plot
