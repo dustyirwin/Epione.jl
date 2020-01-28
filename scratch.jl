@@ -3,6 +3,9 @@
 
 SearchLight.Migration.status()
 SearchLight.Migration.last_up()
+include("./db/migrations/2020011620530417_create_table_sleeps.jl")
+
+CreateTableSleeps
 
 Patients.Patient(first_name="Oprah", last_name="Winfrey", MRN=5) |> save!
 
@@ -11,7 +14,7 @@ MRN = 1
 Sleeps.Sleep(MRN=MRN, date=string(timestamp), hours=6.5) |> save!
 Depressions.Depression(MRN=MRN, date=string(timestamp), score=3.5) |> save!
 
-test_sms()
+Texting.test_sms()
 test_mms(2)
 
 
@@ -22,7 +25,6 @@ client.messages.create(
   from_ = trial_number,
   media_url=["$ngrok_address/patient_plots/$MRN"],
   to = "+15038106415")
-
 
 
 function read_text(p::Patients.Patient, text_body::String)

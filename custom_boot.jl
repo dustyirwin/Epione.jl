@@ -13,7 +13,6 @@ include("./app/resources/patients/Patients.jl")
 include("./app/resources/patients/PatientsController.jl")
 include("./config/Secrets.jl")
 include("./src/Texting.jl")
-include("./src/messages.jl")
 include("./src/routes.jl")
 
 SearchLight.Configuration.load_db_connection() |> SearchLight.Database.connect!
